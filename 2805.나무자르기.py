@@ -8,8 +8,8 @@ h = 0
 
 def bSearch(arr,start,end):
     global h
-    h = (start + end) // 2
     
+    h = (start + end) // 2
     if start > end:
         return h
 
