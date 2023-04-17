@@ -6,8 +6,8 @@ s.sort()
 kill = 0
 
 for x,y in animal:
-    i , j= 0,len(s) 
-    while i < j:
+    i , j= 0,len(s) - 1
+    while i <= j:
         mid = (i + j) // 2
         if abs(s[mid]-x)+y <= l:
             kill += 1
