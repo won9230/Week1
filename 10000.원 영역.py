@@ -4,39 +4,42 @@ n= int(sys.stdin.readline())
 
 circles = []
 
-for i in range(n):
-    x,r = map(int,sys.stdin.readline().split()) #원 하고 반지름 저장
-    circles.append((x-r,'(')) #원의 왼쪽 끝점을 ( 로 저장
-    circles.append((x+r,')')) #원의 오른쪽 끝점을 ) 로 저장
-    
-circles = sorted(circles,key= lambda x : ( x[0], -ord(x[1]))) #원의 왼쪽 끝점을 중심으로 오름차순 정렬 수가 같으면 ) 가 먼저 정렬
+for _ in range(n):
+    x,r = map(int,sys.stdin.readline().split())
+    #'왼쪽 점인지 오른쪽 점인지 여부'와 점의 위치를 저장한다.
+    circles.append(('L',x-r)) #왼쪽 점 = 중심 - 반지름
+    circles.append(('R',x+r)) #오른쪽 점 = 중심 + 반지름
 
-stack = []
 
-answer = 1
-for i in range(n*2):
-    position,bracket = circles[i] #circles을 둘로 나눈다
-    if len(stack) == 0: #길이가 0이면
-        stack.append({'pos':position,'bracket':bracket,'status':0})#위치와 괄호를 저장
+# 오른쪽 점 R이 왼쪽 점 L보다 앞으로 오도록 정렬(왼쪽 점과 오른쪽 점이 만나는 경우, 닫히는 점인 오른쪽이 먼저 있어야 힘)
+circles.sort(key = lambda x:(x[0]),reverse=True)
+circles.sort(key=lambda x : x[1])#왼쪽 점부터 오름차순 정렬
+
+stack = [] # 왼쪽 점과 완선된 원의 정보를 담을 스택
+count = 1 # 영역 개수
+
+for circle in circles:
+    if circle[0] == 'L': # 현재 점이 왼쪽 점인 경우들만, stack에 담아둔다.
+        stack.append(circle)
         continue
     
-    if bracket == ')': #괄호가 ) 면
-        if stack[-1]['status'] == 0: 
-            answer += 1
-        elif stack[-1]['status'] == 1:
-            answer += 2
+    #현재 열린 원 안에 원이 들어있는 경우
+    total_width = 0
+    while stack:
+        prev = stack.pop()
+        #L을 꺼낸 경우 == 스택에서 꺼낸 게 왼쪽 점인 경우 -> 원이 만들어짐
+        if prev[0] == 'L':
+            width = circle[1] - prev[1]
+
+            if total_width == width: #현재 만들어진 원의 지름이 이전의 원들 지름의 합과 같을 경우
+                count += 2
+            else:
+                count += 1
+            #원이 만들어졌으므로 stack에 원을 의미하는 C와 너비 추가
+            stack.append(('C',width))
+            break
+        #C를 꺼낸 경우 == 스택에서 꺼낸게 원인 경우 -> 현재 원 안에 존재하는 원을 의미
+        elif prev[0] == 'C':
+            total_width += prev[1]
             
-        stack.pop()
-        if i != n*2-1:
-            if circles[i+1][0] != position:
-                stack[-1]['status'] = 0
-    else:
-        if stack[-1]['pos'] == position: # 스택에 있는 pos가 position이랑 같으면(원끼리 겹치면)
-            stack[-1]['status'] = 1 #마지막 스택에 있는 status = 1
-            stack.append({'pos':position,'bracket':bracket,'status':0})
-        else:
-            stack.append({'pos':position,'bracket':bracket,'status':0})
-print(answer)   
-    
-    
-    
+print(count)

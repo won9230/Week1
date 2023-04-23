@@ -56,7 +56,7 @@ while True:
             borad[_s[0]][_s[1]] = 0
 
               
-    if trunCount <= count and len(x1):
+    if trunCount <= count and len(x1):    #뱀이 오른쪽으로 갈지 왼쪽으로 갈지 정함
         dir += direction
         if dir >= 4:
             dir = 0
@@ -65,4 +65,3 @@ while True:
         _x1 = x1.popleft()
         trunCount = int(_x1[0]) #몇번쨰 돌지 세주는 카운트
         direction = _x1[1] #오른쪽 왼쪽 정해주는 수
-    #뱀이 오른쪽으로 갈지 왼쪽으로 갈지 정함

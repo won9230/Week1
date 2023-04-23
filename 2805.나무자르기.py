@@ -1,29 +1,30 @@
 import sys
-n1 , m1 = sys.stdin.readline().split()
-tree = list(map(int,sys.stdin.readline().split()))
+n , m = list(map(int,sys.stdin.readline().split())) #나무 개수 , 가져가는 나무 길이
+tree= list(map(int,sys.stdin.readline().split()))
 tree.sort()
-n = int(n1) # 나무 개수
-m = int(m1) # 필요한 나무
 h = 0
 
-def bSearch(arr,start,end):
-    global h
-    
+#높이 기준을 으로 나눈다
+def bSherch(start,end):
+    tmp = 0
+    #start ,end 로 임시 높이를 구한다
     h = (start + end) // 2
-    if start > end:
+    
+    if start > end :   
         return h
 
-    anw = 0
-    
-    for i in range(len(arr)):
-        if arr[i] > h:
-           anw = anw + (arr[i] - h)
-    
-    if m == anw:
-        return h
-    elif m < anw:
-        return bSearch(arr,h+1,end)
-    elif m > anw:
-        return bSearch(arr,start,h-1)
 
-print(bSearch(tree,1,max(tree)))
+    
+    for i in range(n):
+        if tree[i] > h:
+            tmp += (tree[i] - h)
+    if m == tmp:
+        return h
+    elif m > tmp:
+        return bSherch(start,h - 1)
+    elif m < tmp:
+        return bSherch(h + 1,end)
+    #임시 높이보다 높은 나무만 임시 높이로 빼고 총합을 구한다
+    #높이랑 비교해서 리턴 or 재귀
+    
+print(bSherch(1,max(tree)))

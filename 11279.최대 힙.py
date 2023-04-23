@@ -2,7 +2,7 @@ import heapq
 import sys
 heap = []
 
-n = int(sys.stdin.readline().strip())
+n = int(sys.stdin.readline())
 
 for i in range(n):
     m = int(sys.stdin.readline())
