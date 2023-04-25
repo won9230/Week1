@@ -1,39 +1,24 @@
 import sys
+n = int(sys.stdin.readline())
 sys.setrecursionlimit(10**6)
 
-n = int(sys.stdin.readline())
+graph = [[] for i in range(n + 1)]
 
-# 부모 저장 배열
-parent = [0] * (n+1)
+for i in range(n-1):
+    a,b = map(int,sys.stdin.readline().split())
+    graph[a].append(b)
+    graph[b].append(a)
+    
+visited = [0] * (n + 1)
 
-# 양방향 연결 정보 저장
-graph = [[] for _ in range(n+1)]
+arr = []
 
-for _ in range(n-1):
-
-    # 양방향 연결 정보 입력 및 저장
-    start, end = map(int, sys.stdin.readline().split())
-    graph[start].append(end)
-    graph[end].append(start)
-
-def dfs(root):
-
-    # 현재 노드와 연결된 노드 확인
-    for neighbor in graph[root]:
-
-        # 연결된 노드의 부모가 없다면
-        if (parent[neighbor] == 0):
-
-            # 현재 노드를 연결된 노드의 부모 노드로 설정
-            parent[neighbor] = root
-
-            # 연결된 노드들 기준으로 DFS 진행
-            dfs(neighbor)
-
-
+def dfs(s):
+    for i in graph[s]:
+        if visited[i] == 0:
+            visited[i] = s
+            dfs(i)
 dfs(1)
-  
-print(graph)
 
-for i in range(2,n+1):
-    print(parent[i])
+for x in range(2,n+1):
+    print(visited[x])

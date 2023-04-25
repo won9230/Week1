@@ -1,34 +1,86 @@
 import sys
 from collections import deque
-N , M , V= map(int,sys.stdin.readline().split())
+N,M,V = map(int,sys.stdin.readline().split())
 
-graph = [[0] * (N + 1) for _ in range(N + 1)]
+graph = [[0] * (N + 1) for _ in range(N+1)]
 
 for _ in range(M):
     a,b = map(int,sys.stdin.readline().split())
+    
     graph[a][b] = 1
     graph[b][a] = 1
 visited1 = [False] * (N + 1)
 visited2 = [False] * (N + 1)
 
 def bfs(V):
-    q = deque([V])
+    q = deque([V]) 
     visited2[V] = True
-    while q:
+    while q :
         V = q.popleft()
-        print(V,end = ' ')
-        for i in range(1,N + 1):
+        print(V,end=' ')
+        for i in range(1, N + 1):
             if not visited2[i] and graph[V][i]:
                 q.append(i)
                 visited2[i] = True
-                
+
 def dfs(V):
-    visited1[V] = True
-    print(V,end=" ")
+    visited1[V] = True #방문처리
+    print(V,end=' ') #프린트
     for i in range(1,N+1):
-        if not visited1[i] and graph[V][i]:
+        if not visited1[i] and graph[V][i]: #방문하지 않았고 그래프에있으면
             dfs(i)
-            
-dfs(V)
-print()
+
 bfs(V)
+print()
+dfs(V)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# import sys
+# from collections import deque
+# N , M , V= map(int,sys.stdin.readline().split())
+
+# graph = [[0] * (N + 1) for _ in range(N + 1)]
+
+# for _ in range(M):
+#     a,b = map(int,sys.stdin.readline().split())
+#     graph[a][b] = 1
+#     graph[b][a] = 1
+# visited1 = [False] * (N + 1)
+# visited2 = [False] * (N + 1)
+
+# def bfs(V):
+#     q = deque([V])
+#     visited2[V] = True
+#     while q:
+#         V = q.popleft()
+#         print(V,end = ' ')
+#         for i in range(1,N + 1):
+#             if not visited2[i] and graph[V][i]:
+#                 q.append(i)
+#                 visited2[i] = True
+                
+# def dfs(V):
+#     visited1[V] = True
+#     print(V,end=" ")
+#     for i in range(1,N+1):
+#         if not visited1[i] and graph[V][i]:
+#             dfs(i)
+            
+# dfs(V)
+# print()
+# bfs(V)
+
