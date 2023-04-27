@@ -1,86 +1,39 @@
 import sys
 from collections import deque
-N,M,V = map(int,sys.stdin.readline().split())
+n,m,v = map(int,sys.stdin.readline().split())
+graph = [[] for _ in range(n+1)]
 
-graph = [[0] * (N + 1) for _ in range(N+1)]
 
-for _ in range(M):
+for i in range(m):
     a,b = map(int,sys.stdin.readline().split())
+    graph[a].append(b)
+    graph[b].append(a)
     
-    graph[a][b] = 1
-    graph[b][a] = 1
-visited1 = [False] * (N + 1)
-visited2 = [False] * (N + 1)
+for i in graph:
+    i.sort()
+    
 
-def bfs(V):
-    q = deque([V]) 
-    visited2[V] = True
-    while q :
-        V = q.popleft()
-        print(V,end=' ')
-        for i in range(1, N + 1):
-            if not visited2[i] and graph[V][i]:
-                q.append(i)
-                visited2[i] = True
+visited1 = [False] * (n+1)
+visited2 = [False] * (n+1)
 
-def dfs(V):
-    visited1[V] = True #방문처리
-    print(V,end=' ') #프린트
-    for i in range(1,N+1):
-        if not visited1[i] and graph[V][i]: #방문하지 않았고 그래프에있으면
+def dfs(start):
+    visited1[start] = True
+    print(start,end=' ')
+    for i in graph[start]:
+        if not visited1[i]:
             dfs(i)
+    
+def bfs(v):
+    queue = deque([v])
+    visited2[v] = True
+    while queue:
+        v = queue.popleft()
+        print(v,end=' ')
+        for i in graph[v]:
+            if not visited2[i]:
+                visited2[i] = True
+                queue.append(i)
 
-bfs(V)
+dfs(v)
 print()
-dfs(V)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# import sys
-# from collections import deque
-# N , M , V= map(int,sys.stdin.readline().split())
-
-# graph = [[0] * (N + 1) for _ in range(N + 1)]
-
-# for _ in range(M):
-#     a,b = map(int,sys.stdin.readline().split())
-#     graph[a][b] = 1
-#     graph[b][a] = 1
-# visited1 = [False] * (N + 1)
-# visited2 = [False] * (N + 1)
-
-# def bfs(V):
-#     q = deque([V])
-#     visited2[V] = True
-#     while q:
-#         V = q.popleft()
-#         print(V,end = ' ')
-#         for i in range(1,N + 1):
-#             if not visited2[i] and graph[V][i]:
-#                 q.append(i)
-#                 visited2[i] = True
-                
-# def dfs(V):
-#     visited1[V] = True
-#     print(V,end=" ")
-#     for i in range(1,N+1):
-#         if not visited1[i] and graph[V][i]:
-#             dfs(i)
-            
-# dfs(V)
-# print()
-# bfs(V)
-
+bfs(v)

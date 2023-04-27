@@ -1,4 +1,5 @@
 import sys
+sys.setrecursionlimit(10**5)
 k = int(sys.stdin.readline())#테스트 케이스
 
 def dfs(start,group):

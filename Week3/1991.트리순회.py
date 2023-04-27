@@ -1,77 +1,23 @@
 import sys
-n = int(sys.stdin.readline())
-tree = {}
-for i in range(n):
-    root , left,right = sys.stdin.readline().split()
-    tree[root] = [left,right]
+sys.setrecursionlimit(10**5)
+n = []
+while True:
+    try:
+        n.append(int(sys.stdin.readline()))
+    except:
+        break
     
-print(tree)
+def p(start,end):
+    if start > end:
+        return
+    mid = end + 1
+    
+    for i in range(start + 1,end +1):
+        if n[start] < n[i]:
+            mid = i
+            break
+    p(start + 1,mid-1)
+    p(mid,end)
+    print(n[start])
 
-def A(_root):
-    if _root != '.':
-        print(_root,end='')
-        A(tree[_root][0])
-        A(tree[_root][1])
-
-def B(_root):
-    if _root != '.':
-        B(tree[_root][0])
-        print(_root,end='')
-        B(tree[_root][1])
-
-def C(_root):
-    if _root != '.':
-        C(tree[_root][0])
-        C(tree[_root][1])
-        print(_root,end='')
-
-A('A')
-print()
-B('A')
-print()
-C('A')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# import sys
-# n = int(sys.stdin.readline())
-# tree = {}
-
-# for i in range(n):
-#     root, left, right = sys.stdin.readline().rstrip().split()
-#     tree[root] = [left,right]
-
-# def A(root):
-#     if root != '.':
-#         print(root,end='')
-#         A(tree[root][0])
-#         A(tree[root][1])
-
-# def B(root):
-#     if root != '.':
-#         B(tree[root][0])
-#         print(root,end='')
-#         B(tree[root][1])
-
-# def C(root):
-#     if root != '.':
-#         C(tree[root][0])
-#         C(tree[root][1])
-#         print(root,end='')
-
-# A('A')
-# print()
-# B('A')
-# print()
-# C('A')
+p(0,len(n)-1)
