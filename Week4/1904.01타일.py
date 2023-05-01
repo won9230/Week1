@@ -1,11 +1,11 @@
 import sys
 
-n = int(input())
+n = int(sys.stdin.readline())
 
-dp = [0] * (n + 2)
-
-dp[1] = 1
-dp[2] = 2
-for i in range(3,n + 1):
-    dp[i] = (dp[i - 1] + dp[i - 2]) % 15746
-print(dp[n])
+d = [0] * (n + 2)
+d[1] = 1
+d[2] = 2
+cnt = 0
+for i in range(3,n + 2):
+    d[i] = (d[i - 2] + d[i - 1]) % 15764
+print(d[n])

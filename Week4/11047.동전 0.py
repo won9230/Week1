@@ -1,12 +1,15 @@
-a = input().split('-')
-num = []
-for i in a:
-    cnt = 0
-    s = i.split('+')
-    for j in s:
-        cnt += int(j)
-    num.append(cnt)
-n = num[0]
-for i in range(1,len(num)):
-    n -= num[i]
-print(n)
+import sys
+n , k = map(int,sys.stdin.readline().split())
+a = []
+cnt = 0
+ans = 0
+for i in range(n):
+    a.append(int(sys.stdin.readline()))
+a.sort(reverse=True)
+for i in range(len(a)):
+    if k >= a[i]:
+        cnt = k // a[i]
+        k = k - a[i] * cnt
+        ans += cnt
+
+print(ans)

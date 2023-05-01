@@ -1,17 +1,15 @@
 import sys
-read = sys.stdin.readline
-
-T = int(read())
-
-while T:
-    N = int(read())
-    coin = list(map(int,read().split()))
-    M = int(read())
-    d = [0 for _ in range(M + 1)]
+t = int(sys.stdin.readline())
+for i in range(t):
+    n = int(sys.stdin.readline())
+    coins = list(map(int,sys.stdin.readline().split()))
+    m = int(sys.stdin.readline())
+    
+    d = [0] * (m + 1)
     d[0] = 1
     
-    for i in range(N):
-        for j in range(coin[i],M+1):
-            d[j] += d[j-coin[i]]
-    print(d[M])
-    T -= 1
+    for coin in coins:
+        for i in range(m + 1):
+            if i >= coin:
+                d[i] += d[i - coin]
+    print(d[m])

@@ -1,21 +1,18 @@
 import sys
+n , k = map(int,sys.stdin.readline().split())
 
-n,k = map(int,input().split())
-stuff = [[0,0]]
-knapsack = [[0 for _ in range(k + 1)] for _ in range(n+1)]
+backpack = [[0,0]]
+suff = [[0 for _ in range(k + 1)] for _ in range(n + 1)]
 
-for _ in range(n):
-    stuff.append(list(map(int,input().split())))
-    
+for i in range(n):
+    backpack.append(list(map(int,sys.stdin.readline().split())))
+
 for i in range(1,n+1):
+    w = backpack[i][0]
+    v = backpack[i][1]
     for j in range(1,k+1):
-        weight = stuff[i][0]
-        value = stuff[i][1]
-    
-        if j < weight:
-            knapsack[i][j] = knapsack[i - 1][j]
+        if j < w:
+            suff[i][j] = suff[i - 1][j]
         else:
-            knapsack[i][j] = max(value + knapsack[i - 1][j - weight], knapsack[i - 1][j])
-
-
-print(knapsack[n][k])
+            suff[i][j] = max(v + suff[i - 1][j - w],suff[i - 1][j])
+print(suff[n][k])

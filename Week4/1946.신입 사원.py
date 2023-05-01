@@ -1,16 +1,16 @@
 import sys
-T = int(sys.stdin.readline())
-num = []
-for _ in range(T):
+t = int(sys.stdin.readline())
+
+for k in range(t):
     n = int(sys.stdin.readline())
-    rank = [list(map(int,sys.stdin.readline().split())) for _ in range(n)]
-    rank_asc = sorted(rank)
-    top = 0
-    result = 1
-    
-    for i in range(1,len(rank_asc)):
-        if rank_asc[i][1] < rank_asc[top][1]:
-            top = i
-            result += 1
-    num.append(result)
-print(num)
+    people = []
+    cnt = 1
+    for i in range(n):
+        people.append(list(map(int,sys.stdin.readline().split())))
+    people.sort(key=lambda x :(x[0],x[1]))
+    top = people[0][1]
+    for i in range(n):
+        if top > people[i][1]:
+            top = people[i][1]
+            cnt += 1
+    print(cnt)

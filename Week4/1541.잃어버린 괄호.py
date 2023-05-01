@@ -1,13 +1,14 @@
 import sys
-a = sys.stdin.readline().split('-')
+
+n = sys.stdin.readline().rstrip().split('-')
 num = []
-for i in a:
+for i in n:
     cnt = 0
     s = i.split('+')
     for j in s:
         cnt += int(j)
     num.append(cnt)
-n = num[0]
+ans = num[0]
 for i in range(1,len(num)):
-    n -= num[i]
-print(n)
+    ans -= num[i]
+print(ans)
