@@ -1,13 +1,9 @@
 import sys
 n = int(sys.stdin.readline())
+arr = [5001] * (n + 5)
+arr[3] = arr[5] = 1
 
-cnt = 0
-while n >= 0:
-    if n % 5 == 0:
-        cnt += (n // 5)
-        print(cnt)
-        break
-    n -= 3
-    cnt += 1
-else:
-    print(-1)
+for i in range(6,n+1):
+    arr[i] = min(arr[i-3], arr[i-5]) + 1
+
+print(arr[n] if arr[n] < 5001 else -1)

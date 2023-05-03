@@ -1,15 +1,12 @@
 import sys
 n , k = map(int,sys.stdin.readline().split())
-a = []
-cnt = 0
-ans = 0
+coins = []
 for i in range(n):
-    a.append(int(sys.stdin.readline()))
-a.sort(reverse=True)
-for i in range(len(a)):
-    if k >= a[i]:
-        cnt = k // a[i]
-        k = k - a[i] * cnt
-        ans += cnt
-
-print(ans)
+    coins.append(int(sys.stdin.readline()))
+coins.sort(reverse = True)
+cnt = 0
+for i in range(n):
+    if k >= coins[i]:
+        cnt += (k // coins[i])
+        k %= coins[i]
+print(cnt)

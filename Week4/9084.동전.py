@@ -1,15 +1,12 @@
 import sys
 t = int(sys.stdin.readline())
-for i in range(t):
+for _ in range(t):
     n = int(sys.stdin.readline())
     coins = list(map(int,sys.stdin.readline().split()))
-    m = int(sys.stdin.readline())
-    
-    d = [0] * (m + 1)
-    d[0] = 1
-    
+    money = int(sys.stdin.readline())
+    suff = [0] * (money + 1)
+    suff[0] = 1
     for coin in coins:
-        for i in range(m + 1):
-            if i >= coin:
-                d[i] += d[i - coin]
-    print(d[m])
+        for j in range(1,money + 1):
+            suff[j] += suff[j - coin]
+    print(suff[-1])

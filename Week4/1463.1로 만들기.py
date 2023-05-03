@@ -1,7 +1,10 @@
 n = int(input())
-cache = [0] * 1001
-cache[1] = 1
-cache[2] = 2
-for i in range(3,1001):
-    cache[i] = (cache[i - 1] + cache[i - 2]) % 10007
-print(cache[n])
+d = [0] * (n+1)
+
+for i in range(2,n+1):
+    d[i] = d[i -1] +1
+    if i % 3 == 0:
+        d[i] = min(d[i],d[i // 3] + 1)
+    if i % 2 == 0:
+        d[i] = min(d[i],d[i // 2] + 1)
+print(d[-1])
